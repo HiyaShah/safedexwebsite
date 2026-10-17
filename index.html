@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="Pushing Dexterity and Safety for In-Hand Object Pose Reaching That Works Remarkably Well.">
+  <meta name="keywords" content="dexterous manipulation, robot hands, reinforcement learning, safety, sim-to-real, LEAP hand">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#ffffff">
+  <title>SafeDex | Dexterity and Safety for In-Hand Object Pose Reaching</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Castoro:ital@0;1&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="icon" href="static/media/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="static/css/index.css">
+</head>
+<body>
+  <main>
+    <section class="hero">
+      <div class="container hero-inner">
+        <p class="eyebrow">Robot Learning · Dexterous Manipulation · Safety</p>
+        <h1><span>Pushing Dexterity and Safety</span><small>for In-Hand Object Pose Reaching That Works Remarkably Well</small></h1>
+        <div class="authors"><a href="#author">Ian Chuang</a><sup>1</sup></div>
+        <p class="affiliation"><sup>1</sup>University of California, Berkeley</p>
+        <nav class="publication-links" aria-label="Project resources">
+          <a class="pill" href="static/pdfs/paper.pdf" target="_blank" rel="noopener"><span aria-hidden="true">▤</span> Paper</a>
+          <span class="pill is-disabled" aria-disabled="true" title="Add the arXiv URL when available"><span aria-hidden="true">A</span> arXiv soon</span>
+          <span class="pill is-disabled" aria-disabled="true" title="Add the project video URL when available"><span aria-hidden="true">▶</span> Video soon</span>
+          <a class="pill" href="https://github.com/HiyaShah/safedexwebsite" target="_blank" rel="noopener"><span aria-hidden="true">⌘</span> Code</a>
+        </nav>
+      </div>
+    </section>
+
+    <section class="teaser section-tight">
+      <div class="container">
+        <p class="tldr"><strong>TL;DR:</strong> Reach diverse 6D object poses at any wrist orientation—and use one dial to trade a little performance for far fewer drops.</p>
+        <div class="media-placeholder media-hero" role="img" aria-label="Placeholder for project teaser video">
+          <div class="placeholder-mark" aria-hidden="true">▶</div><strong>Project teaser video</strong>
+          <span>Replace with <code>static/media/teaser.mp4</code></span>
+          <small>Suggested: consecutive pose goals, arbitrary wrist orientations, and safety-filter recoveries</small>
+        </div>
+      </div>
+    </section>
+
+    <section class="section highlights" aria-labelledby="highlights-title">
+      <div class="container">
+        <div class="section-heading">
+          <div><p class="kicker">SafeDex in action</p><h2 id="highlights-title">Four objects. Six wrist orientations. Long sequences of goals.</h2></div>
+          <p>Each policy moves its object through challenging positions and orientations relative to the hand—without relying on human demonstrations.</p>
+        </div>
+        <div class="object-grid">
+          <article><div class="media-placeholder media-card"><span>Video placeholder</span><code>knife.mp4</code></div><h3>Knife</h3><p>Full-pose reaching with a long, asymmetric object.</p></article>
+          <article><div class="media-placeholder media-card"><span>Video placeholder</span><code>lightbulb.mp4</code></div><h3>Lightbulb</h3><p>Axis goals, continuous spinning, and a real insertion task.</p></article>
+          <article><div class="media-placeholder media-card"><span>Video placeholder</span><code>rubber-duck.mp4</code></div><h3>Rubber duck</h3><p>Robust manipulation of a highly non-convex object.</p></article>
+          <article><div class="media-placeholder media-card"><span>Video placeholder</span><code>wineglass.mp4</code></div><h3>Wineglass</h3><p>Precise axis reaching across delicate, unstable grasps.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section paper-section" aria-labelledby="abstract-title">
+      <div class="container prose-grid">
+        <div><p class="kicker">About the work</p><h2 id="abstract-title">Abstract</h2></div>
+        <div class="abstract-copy">
+          <p>Dexterous manipulation with multi-fingered hands is the next frontier of robotics, yet learned hand skills remain limited to simple grasps or repeated motions. As robots attempt more demanding in-hand maneuvers, safety—such as not dropping the object—becomes critical, yet it is rarely measured.</p>
+          <p>We study in-hand object pose reaching: moving an object to any position and orientation relative to the hand, at any wrist orientation, through long sequences of consecutive goals. We present a simulation-trained recipe for a LEAP hand that combines generated grasp datasets, diverse resets and goals, an adaptive friction curriculum, careful system identification, and teacher–student policies that use either motion capture or a single wrist-mounted depth camera.</p>
+          <p>A learned residual safety filter sits on top of the task policy and exposes adjustable conservativeness at deployment. Across 13.3 hours of real-robot evaluation and 4,800 unseen goals, the state policy reaches 95% of goals within 2 cm and 0.4 rad; the filter cuts drops by 75% at a cost of 3.7 points of success.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section method" aria-labelledby="method-title">
+      <div class="container">
+        <div class="section-heading compact"><div><p class="kicker">Method</p><h2 id="method-title">A practical recipe for dexterity—and a safety layer on top.</h2></div></div>
+        <div class="media-placeholder media-wide" role="img" aria-label="Placeholder for the method overview figure">
+          <div class="pipeline" aria-hidden="true"><span>Generated grasps</span><b>→</b><span>Task policy</span><b>→</b><span>Sim-to-real</span><b>→</b><span>Residual safety filter</span></div>
+          <strong>Method overview figure</strong><span>Replace with <code>static/media/method.png</code></span>
+        </div>
+        <div class="steps">
+          <article><span>01</span><h3>Learn diverse poses</h3><p>Feasible resets and goals come from generated grasp datasets, covering configurations that uniform sampling would miss.</p></article>
+          <article><span>02</span><h3>Bridge simulation and reality</h3><p>An identified actuator model, domain randomization, and distillation produce state- and depth-based real-world policies.</p></article>
+          <article><span>03</span><h3>Filter unsafe actions</h3><p>A learned residual corrects the frozen policy. A run-time weight controls how freely the filter can intervene.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section results" aria-labelledby="results-title">
+      <div class="container">
+        <div class="section-heading">
+          <div><p class="kicker">Real-robot evaluation</p><h2 id="results-title">Performance measured over hours—not a highlight reel.</h2></div>
+          <p>Four objects, 4,800 held-out goals, and six directions of gravity in the hand frame.</p>
+        </div>
+        <div class="metrics" aria-label="Headline results">
+          <article><strong>95%</strong><span>coarse goal success</span><small>State policy, within 2 cm and 0.4 rad</small></article>
+          <article><strong>75%</strong><span>fewer drops</span><small>With the residual safety filter</small></article>
+          <article><strong>4,800</strong><span>unseen goals</span><small>Across four objects and six wrist orientations</small></article>
+          <article><strong>13.3 h</strong><span>robot evaluation</span><small>Consecutive real-world goal windows</small></article>
+        </div>
+        <div class="media-placeholder media-wide result-placeholder" role="img" aria-label="Placeholder for quantitative results plot">
+          <div class="mock-chart" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          <strong>Performance–safety trade-off</strong><span>Replace with <code>static/media/results.png</code></span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section applications" aria-labelledby="applications-title">
+      <div class="container split">
+        <div><p class="kicker">Beyond the benchmark</p><h2 id="applications-title">One portable skill, many difficult behaviors.</h2><p>The wrist-camera policy reaches out-of-distribution goals, withstands fast arm motion and physical perturbations, and composes with arm motion for longer tasks—including flipping a wineglass, reorienting a rubber duck, and screwing in a lightbulb until it turns on.</p></div>
+        <div class="media-placeholder media-feature" role="img" aria-label="Placeholder for downstream applications video"><div class="placeholder-mark" aria-hidden="true">▶</div><strong>Applications video</strong><span>Replace with <code>static/media/applications.mp4</code></span></div>
+      </div>
+    </section>
+
+    <section class="section citation" aria-labelledby="citation-title">
+      <div class="container prose-grid">
+        <div><p class="kicker">Reference</p><h2 id="citation-title">BibTeX</h2></div>
+        <div><pre><code>@article{chuang2026pushing,
+  title   = {Pushing Dexterity and Safety for In-Hand Object
+             Pose Reaching That Works Remarkably Well},
+  author  = {Chuang, Ian},
+  year    = {2026},
+  note    = {Manuscript}
+}</code></pre><p class="citation-note">Placeholder citation metadata—replace the entry when the final venue or arXiv record is available.</p></div>
+      </div>
+    </section>
+  </main>
+  <footer id="author"><div class="container footer-inner"><p>Project page for research from the University of California, Berkeley.</p><p>Academic-page structure inspired by <a href="https://morphometricimitation.github.io/" target="_blank" rel="noopener">Morphometric Imitation</a> and the <a href="https://nerfies.github.io/" target="_blank" rel="noopener">Nerfies</a> template.</p></div></footer>
+</body>
+</html>
